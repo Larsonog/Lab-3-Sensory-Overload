@@ -5,22 +5,6 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:transparent_image/transparent_image.dart';
 
-class JournalEntry {
-  const JournalEntry({
-    required this.path,
-    required this.date,
-    required this.title,
-    required this.description
-  });
-
-  final String path;
-  final DateTime date;
-  final String title;
-  final String description;
-
-  
-}
-
 class JournalEntryScreen extends StatelessWidget {
   const JournalEntryScreen({super.key});
 
