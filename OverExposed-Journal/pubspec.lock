@@ -96,7 +96,7 @@ packages:
     source: hosted
     version: "1.8.0"
   path:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: path
       url: "https://pub.dartlang.org"
@@ -115,7 +115,7 @@ packages:
     source: hosted
     version: "1.9.0"
   sqflite:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: sqflite
       url: "https://pub.dartlang.org"
