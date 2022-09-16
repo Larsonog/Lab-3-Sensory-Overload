@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-void main() => runApp(const MyApp());
+void main() => runApp(const OverExposeJournal()); //add camera: firstCamera (from camera.dart)
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class OverExposeJournal extends StatelessWidget {
+  const OverExposeJournal({super.key});
 
   static const String _title = 'Flutter Code Sample';
 
