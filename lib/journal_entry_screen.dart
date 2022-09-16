@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:transparent_image/transparent_image.dart';
-import 'package:to_dont_list/journal_entry.dart';
+import 'package:overexpose_journal/journal_entry.dart';
 
 class JournalEntryScreen extends StatefulWidget {
   const JournalEntryScreen({super.key, this.journal_entry, this.path});
