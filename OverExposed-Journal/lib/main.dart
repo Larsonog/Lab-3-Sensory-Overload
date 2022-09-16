@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:to_dont_list/journal_entry_screen.dart';
 
-void main() => runApp(const MyApp());
+void main() => runApp(const OverExposeJournal()); //add camera: firstCamera (from camera.dart)
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class OverExposeJournal extends StatelessWidget {
+  const OverExposeJournal({super.key});
 
   static const String _title = 'Flutter Code Sample';
 
