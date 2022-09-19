@@ -17,4 +17,13 @@ class JournalEntry {
   MemoryImage getImage() {
     return MemoryImage(kTransparentImage);
   }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'date': date.toString(),
+      'path': path,
+      'title': title,
+      'description': description
+    };
+  }
 }
