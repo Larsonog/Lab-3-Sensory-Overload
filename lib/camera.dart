@@ -68,8 +68,8 @@ class TakePictureScreenState extends State<TakePictureScreen> {
 
             await Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (context) => DisplayPictureScreen(
-                  imagePath: image.path,
+                builder: (context) => JournalEntryScreen(
+                  path: image.path,
                 ),
               )
             );
@@ -79,22 +79,6 @@ class TakePictureScreenState extends State<TakePictureScreen> {
         },
         child: const Icon(Icons.camera_alt),
       ),
-    );
-  }
-}
-
-class DisplayPictureScreen extends StatelessWidget {
-  final String imagePath;
-  const DisplayPictureScreen({super.key, required this.imagePath});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Display activity picture')),
-      body: Column(children: [Image.file(File(imagePath)),
-      Row(children: [TextButton(onPressed: () {Navigator.pop(context);}, child: Icon(Icons.arrow_back)),
-      TextButton(onPressed: () {}, child: const Icon(Icons.done))],
-      )]),
     );
   }
 }
