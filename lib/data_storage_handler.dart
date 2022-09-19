@@ -6,6 +6,7 @@ import 'package:overexpose_journal/journal_entry.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:uuid/uuid.dart';
 
 class DataHandler {
 
@@ -15,8 +16,9 @@ class DataHandler {
   //    https://docs.flutter.dev/cookbook/persistence/sqlite#example
   // to design class
   
-  static final _databaseName = "journal.db";
-  static final _databaseVersion = 1;
+  static const _databaseName = "journal.db";
+  static const _databaseVersion = 1;
+  static const _uuid = Uuid();
 
   DataHandler._privateConstructor();
   static final DataHandler instance = DataHandler._privateConstructor();
@@ -67,13 +69,13 @@ class DataHandler {
     });
   }
 
-  Future<FileImage> saveImage(FileImage image) async {
+  Future<String> saveImage(FileImage image) async {
     final Directory appdocdir = await getApplicationDocumentsDirectory();
-    final String appdocpath = appdocdir.path;
+    final String imagePath = '${appdocdir.path}${_uuid.v4}.png';
 
-    final File newImage = await image.file.copy(appdocpath);
+    await image.file.copy(imagePath);
 
-    return FileImage(newImage);
+    return imagePath;
   }
 
   Future<FileImage> getImage(String path) async {
