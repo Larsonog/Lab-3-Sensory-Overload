@@ -45,17 +45,17 @@ class _JournalEntryScreenState extends State<JournalEntryScreen> {
         child: Row(
           children: [
             IconButton(icon: const Icon(Icons.done), onPressed: () {
-              var pass_on;
+              var passOn;
 
               if (widget.journal_entry == null) {
-                var pass_on = JournalEntry(
+                var passOn = JournalEntry(
                   path: widget.path!,
                   date: DateTime.now(),
                   title: '[placeholder]',
                   description: '[placeholder]'
                 );
               } else {
-                var pass_on = widget.journal_entry;
+                var passOn = widget.journal_entry;
               }
             }),
             const Spacer(),
@@ -65,4 +65,11 @@ class _JournalEntryScreenState extends State<JournalEntryScreen> {
       ),
     );
   }
+}
+
+class JournalEntryArguments {
+  const JournalEntryArguments({this.journal_entry, this.path});
+
+  final JournalEntry? journal_entry;
+  final String? path;
 }
