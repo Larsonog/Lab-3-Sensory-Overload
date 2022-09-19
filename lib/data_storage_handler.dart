@@ -71,7 +71,7 @@ class DataHandler {
 
   Future<String> saveImage(FileImage image) async {
     final Directory appdocdir = await getApplicationDocumentsDirectory();
-    final String imagePath = '${appdocdir.path}${_uuid.v4}.png';
+    final String imagePath = join(appdocdir.path,'${_uuid.v4()}.png');
 
     await image.file.copy(imagePath);
 
