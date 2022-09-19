@@ -93,7 +93,7 @@ class DisplayPictureScreen extends StatelessWidget {
       appBar: AppBar(title: const Text('Display activity picture')),
       body: Column(children: [Image.file(File(imagePath)),
       Row(children: [TextButton(onPressed: () {Navigator.pop(context);}, child: Icon(Icons.arrow_back)),
-      TextButton(onPressed: () {Navigator.push(context, const JournalEntryScreen());}, child: const Icon(Icons.done))],
+      TextButton(onPressed: () {}, child: const Icon(Icons.done))],
       )]),
     );
   }
