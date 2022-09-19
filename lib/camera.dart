@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:overexpose_journal/journal_entry_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -90,7 +91,10 @@ class DisplayPictureScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Display activity picture')),
-      body: Image.file(File(imagePath)),
+      body: Column(children: [Image.file(File(imagePath)),
+      Row(children: [TextButton(onPressed: () {Navigator.pop(context);}, child: Icon(Icons.arrow_back)),
+      TextButton(onPressed: () {Navigator.push(context, const JournalEntryScreen());}, child: const Icon(Icons.done))],
+      )]),
     );
   }
 }
