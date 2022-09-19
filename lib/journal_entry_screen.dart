@@ -1,8 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:transparent_image/transparent_image.dart';
 import 'package:overexpose_journal/journal_entry.dart';
+import 'package:overexpose_journal/data_storage_handler.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class JournalEntryScreen extends StatefulWidget {
   const JournalEntryScreen({super.key, this.journal_entry, this.path});
@@ -19,21 +20,51 @@ class _JournalEntryScreenState extends State<JournalEntryScreen> {
   @override
   Widget build(BuildContext context) {
 
+    final DateTime now = DateTime.now();
+
+    final DataHandler dhandler = DataHandler.instance;
+
+    Future<FileImage> getImage() async {
+      FileImage image;
+      if (widget.journal_entry == null) {
+        image = await dhandler.getImage(widget.path!);
+      } else {
+        image = await dhandler.getImage(widget.journal_entry!.path);
+      }
+
+      return image;
+    }
+    
+
     return Scaffold(
       body: SafeArea (
         child: ListView(
           children: [
             ConstrainedBox(
               constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height - 230),
-              child: Image(
-                image: MemoryImage(kTransparentImage),
-                fit: BoxFit.cover,
-                height: double.infinity,
-                width: double.infinity,
+              child: FutureBuilder(
+                future: getImage(),
+                builder: (context, AsyncSnapshot<FileImage> snapshot) {
+                  if (snapshot.hasData) {
+                    return Image(
+                      image: snapshot.data!,
+                      fit: BoxFit.cover,
+                      height: double.infinity,
+                      width: double.infinity,
+                    );
+                  } else {
+                    return Image(
+                      image: MemoryImage(kTransparentImage),
+                      fit: BoxFit.cover,
+                      height: double.infinity,
+                      width: double.infinity,
+                    );;
+                  }
+                }
               ),
             ),
             Text(
-              '${DateTime.now().month} / ${DateTime.now().day} / ${DateTime.now().year}',
+              '${now.month} / ${now.day} / ${now.year}',
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 30),
             ),
@@ -45,21 +76,19 @@ class _JournalEntryScreenState extends State<JournalEntryScreen> {
         child: Row(
           children: [
             IconButton(icon: const Icon(Icons.done), onPressed: () {
-              var pass_on;
-
               if (widget.journal_entry == null) {
-                var pass_on = JournalEntry(
+                var entry = JournalEntry(
                   path: widget.path!,
                   date: DateTime.now(),
                   title: '[placeholder]',
                   description: '[placeholder]'
                 );
-              } else {
-                var pass_on = widget.journal_entry;
+                dhandler.insertEntry(entry);
               }
+              Navigator.pushNamed(context, '/home');
             }),
             const Spacer(),
-            IconButton(icon: const Icon(Icons.close), onPressed: () {}),
+            IconButton(icon: const Icon(Icons.close), onPressed: () {Navigator.pushNamed(context, '/camera');}),
           ],
         ),
       ),
