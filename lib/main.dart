@@ -3,6 +3,7 @@ import 'package:camera/camera.dart';
 import 'package:overexpose_journal/camera.dart';
 import 'package:overexpose_journal/journal_entry_screen.dart';
 
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -12,6 +13,7 @@ Future<void> main() async {
 
   runApp(OverExposeJournal(firstCamera: firstCamera));
 } //add camera: firstCamera (from camera.dart)
+
 
 class OverExposeJournal extends StatelessWidget {
   const OverExposeJournal({super.key, required this.firstCamera});
@@ -50,9 +52,7 @@ class OverExposeJournal extends StatelessWidget {
         }
       },
       title: _title,
-      home: HomeScreen(
-        
-      ),
+      home: JournalEntryScreen(),
     );
   }
 }
