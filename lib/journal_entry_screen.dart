@@ -85,29 +85,41 @@ class _JournalEntryScreenState extends State<JournalEntryScreen> {
               child: 
               Column(
                 children: [
-                  TextFormField(
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: 'Enter a title',
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextFormField(
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: 'Enter a title',
+                      ),
+                      controller: entryControllers[0],
+                      style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.center,
+                      validator: (inputValue){
+                        if (inputValue == null || inputValue.isEmpty) {
+                          return 'Please enter a title';
+                        }
+                        return null;
+                      },
                     ),
-                    controller: entryControllers[0],
-                    style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.center,
-                    validator: (inputValue){
-                      return null;
-                    },
                   ),
-                  TextFormField(
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: 'Enter a description',
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextFormField(
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: 'Enter a description',
+                      ),
+                      controller: entryControllers[1],
+                      maxLines: null,
+                      style: const TextStyle(fontSize: 23),
+                      validator: (inputValue){
+                        if (inputValue == null || inputValue.isEmpty) {
+                          return 'Please enter a description';
+                        }
+                        return null;
+                      },
                     ),
-                    controller: entryControllers[1],
-                    maxLines: null,
-                    style: const TextStyle(fontSize: 23),
-                    validator: (inputValue){
-                      return null;
-                    },
                   ),
                 ],
               ),
