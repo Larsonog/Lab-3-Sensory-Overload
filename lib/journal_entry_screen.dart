@@ -56,6 +56,7 @@ class _JournalEntryScreenState extends State<JournalEntryScreen> {
                 builder: (context, AsyncSnapshot<FileImage> snapshot) {
                   if (snapshot.hasData) {
                     return Image(
+                      key: const Key('I'),
                       image: snapshot.data!,
                       fit: BoxFit.cover,
                       height: double.infinity,
@@ -63,6 +64,7 @@ class _JournalEntryScreenState extends State<JournalEntryScreen> {
                     );
                   } else {
                     return Image(
+                      key: const Key('I'),
                       image: MemoryImage(kTransparentImage),
                       fit: BoxFit.cover,
                       height: double.infinity,
