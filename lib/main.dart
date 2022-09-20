@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:overexpose_journal/journal_entry_screen.dart';
 
-void main() => runApp(const OverExposeJournal()); //add camera: firstCamera (from camera.dart)
+void main() => runApp(
+    const OverExposeJournal()); //add camera: firstCamera (from camera.dart)
 
 class OverExposeJournal extends StatelessWidget {
   const OverExposeJournal({super.key});
@@ -12,9 +13,7 @@ class OverExposeJournal extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: _title,
-      home: JournalEntryScreen(
-        
-      ),
+      home: JournalEntryScreen(),
     );
   }
 }
