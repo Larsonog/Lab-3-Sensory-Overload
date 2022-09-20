@@ -1,6 +1,6 @@
 {
-    "name": "to_dont_list",
-    "short_name": "to_dont_list",
+    "name": "overexpose_journal",
+    "short_name": "overexpose_journal",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

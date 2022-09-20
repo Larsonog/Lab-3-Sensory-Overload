@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "to_dont_list" "\0"
+            VALUE "FileDescription", "overexpose_journal" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "to_dont_list" "\0"
+            VALUE "InternalName", "overexpose_journal" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2022 com.example. All rights reserved." "\0"
-            VALUE "OriginalFilename", "to_dont_list.exe" "\0"
-            VALUE "ProductName", "to_dont_list" "\0"
+            VALUE "OriginalFilename", "overexpose_journal.exe" "\0"
+            VALUE "ProductName", "overexpose_journal" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END
