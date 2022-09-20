@@ -1,4 +1,4 @@
-package com.example.to_dont_list
+package com.example.overexpose_journal
 
 import io.flutter.embedding.android.FlutterActivity
 

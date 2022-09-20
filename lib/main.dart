@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:overexpose_journal/camera.dart';
 import 'package:overexpose_journal/journal_entry_screen.dart';
+import 'package:overexpose_journal/home_screen.dart';
 
 
 Future<void> main() async {
