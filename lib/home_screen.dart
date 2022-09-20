@@ -3,10 +3,10 @@ import 'package:overexpose_journal/home.dart';
 //import 'dart:async';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key, this.path, this.home});
+  const HomeScreen({super.key, this.path});
 
   final String? path;
-  final Home? home;
+  //final Home? home;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();

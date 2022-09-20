@@ -14,10 +14,6 @@ class JournalEntry {
   final String title;
   final String description;
 
-  MemoryImage getImage() {
-    return MemoryImage(kTransparentImage);
-  }
-
   Map<String, dynamic> toMap() {
     return {
       'date': date.toString(),

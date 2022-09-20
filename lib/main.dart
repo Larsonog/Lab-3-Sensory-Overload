@@ -1,7 +1,13 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
+import 'package:flutter/services.dart';
 import 'package:overexpose_journal/camera.dart';
 import 'package:overexpose_journal/journal_entry_screen.dart';
+import 'package:overexpose_journal/home_screen.dart';
+import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -50,34 +56,8 @@ class OverExposeJournal extends StatelessWidget {
         }
       },
       title: _title,
-      home: HomeScreen(
-        
+      home: JournalEntryScreen(
       ),
-    );
-  }
-}
-
-class MyStatelessWidget extends StatelessWidget {
-  const MyStatelessWidget({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final PageController controller = PageController();
-    return PageView(
-      /// [PageView.scrollDirection] defaults to [Axis.horizontal].
-      /// Use [Axis.vertical] to scroll vertically.
-      controller: controller,
-      children: const <Widget>[
-        Center(
-          child: Text('First Page'),
-        ),
-        Center(
-          child: Text('Second Page'),
-        ),
-        Center(
-          child: Text('Third Page'),
-        ),
-      ],
     );
   }
 }
