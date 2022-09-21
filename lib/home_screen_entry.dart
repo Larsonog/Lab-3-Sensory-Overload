@@ -20,27 +20,58 @@ class HomeEntryItem extends StatelessWidget {
       onTap: () {
         onNavigateEntryScreen(item);
       },
-      child: ConstrainedBox(
-        constraints: BoxConstraints(
-            maxHeight: 200, maxWidth: MediaQuery.of(context).size.height),
+      child: Ink(
+        height: 100,
+        width: MediaQuery.of(context).size.width,
         child: Row(children: [
-          FutureBuilder(
-              future: dataHandler.getImage(item.path),
-              builder: (context, AsyncSnapshot<FileImage> snapshot) {
-                if (snapshot.hasData) {
-                  return Image(image: snapshot.data!);
-                } else {
-                  return Image(image: MemoryImage(kTransparentImage));
-                }
-              }),
-          Column(children: [
-            Text(
-              '${now.month} / ${now.day} / ${now.year}',
-              textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 30),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: AspectRatio(
+              aspectRatio: 1,
+              child: FutureBuilder(
+                  future: dataHandler.getImage(item.path),
+                  builder: (context, AsyncSnapshot<FileImage> snapshot) {
+                    if (snapshot.hasData) {
+                      return Container(
+                        decoration: BoxDecoration( 
+                          image: DecorationImage( 
+                            image: snapshot.data!,
+                            fit: BoxFit.cover
+                          )),
+                      );
+                    } else {
+                      return Image(image: MemoryImage(kTransparentImage));
+                    }
+                  }),
             ),
-            Text(item.title)
-          ])
+          ),
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(7.0),
+                  child: Text(
+                    '${now.month} / ${now.day} / ${now.year}',
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(fontSize: 30),
+                  ),
+                ),
+              ),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(7.0),
+                  child: Text(
+                    item.title,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(fontSize: 30),
+                    ),
+                ),
+              )
+            ]),
+          )
         ]),
       ),
     );

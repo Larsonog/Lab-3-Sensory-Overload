@@ -173,7 +173,8 @@ class _JournalEntryScreenState extends State<JournalEntryScreen> {
                 }
               } else {
                 int count = 0;
-                Navigator.popUntil(context, (_) => count++ >= 2);              }
+                Navigator.pop(context);
+              }
             }),
             const Spacer(),
             IconButton(icon: const Icon(Icons.close), key: const Key('BN'), onPressed: () {Navigator.pushNamed(context, '/camera');}),

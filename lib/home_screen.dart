@@ -78,10 +78,19 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     //header with week value
                     Expanded(
-                      child: ListView(
-                        children: list.map((e) {
-                          return HomeEntryItem(item: e, onNavigateEntryScreen: _handleNavigateEntryPage);
-                        }).toList(),
+                      child: ListView.separated(
+                        itemCount: list.length,
+                        itemBuilder: ((context, index) {
+                          return HomeEntryItem(item: list[index], onNavigateEntryScreen: _handleNavigateEntryPage);
+                        }),
+                        separatorBuilder: (context, index) {
+                          return Divider(
+                            indent: 8.0,
+                            endIndent: 8.0,
+                            thickness: 1.0,
+                            color: Theme.of(context).primaryColor,
+                          );
+                        },
                       ),
                     ),
                   ],
