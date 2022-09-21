@@ -1,63 +1,99 @@
 import 'package:flutter/material.dart';
-import 'package:overexpose_journal/home.dart';
-//import 'dart:async';
+import 'package:overexpose_journal/camera.dart';
+import 'package:overexpose_journal/data_storage_handler.dart';
+import 'package:overexpose_journal/home_screen_entry.dart';
+import 'package:overexpose_journal/journal_entry.dart';
+//import 'dart:html';
+import 'dart:async';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key, this.path});
-
-  final String? path;
-  //final Home? home;
+  const HomeScreen({super.key});
+  //final String title;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+}
+
 class _HomeScreenState extends State<HomeScreen> {
+  // list of lists of journal entries
+  // sort list
+  // list sort funtion defines the rule we use
+
+  Future<List<List<JournalEntry>>> _newFuture() async {
+    final DataHandler dhandler = DataHandler.instance;
+    List<JournalEntry> jentry =
+        await dhandler.getAllEntries(); // gets all entries
+    jentry.sort(((a, b) => a.date.compareTo(b.date))); // sort by date
+    List<List<JournalEntry>> weekList = sortWeek(jentry);
+    return weekList;
+  }
+
+  List<List<JournalEntry>> sortWeek(List<JournalEntry> jlist) {
+    // puts date entries into weeks
+    DateTime end = DateTime.utc(0);
+    List<JournalEntry> week = [];
+    List<List<JournalEntry>> returnList = [];
+    for (int i = 0; i < jlist.length; i++) {
+      DateTime currDate = jlist[i].date;
+      if (currDate.compareTo(end) < 0) {
+        week.add(jlist[i]);
+      } else {
+        returnList.add(week);
+        week = [];
+        week.add(jlist[i]);
+        int days = currDate.difference(end).inDays + (7 - currDate.weekday);
+        end.add(Duration(days: days));
+      }
+    }
+    return returnList;
+  }
+
   @override
   Widget build(BuildContext context) {
     final PageController controller = PageController();
+
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: const Text(
-          'OverExpose Journal',
-          style: TextStyle(color: Colors.black),
-        ),
+      appBar: AppBar(title: const Text('OverExpose Journal')),
+      body: FutureBuilder(
+        future: _newFuture(),
+        builder: (context, AsyncSnapshot<List<List<JournalEntry>>> snapshot) {
+          if (snapshot.hasData) {
+            return PageView(
+              controller: controller,
+              children: snapshot.data!.map((list) {
+                return Column(
+                  children: [
+                    //header with week value
+                    ListView(
+                      children: list.map((e) {
+                        return HomeEntryItem(item: e);
+                      }).toList(),
+                    ),
+                  ],
+                );
+              }).toList(),
+            );
+          } else {
+            return const Center(child: CircularProgressIndicator());
+          }
+        },
       ),
-      body: SizedBox(
-        child: PageView(
-          controller: controller,
-          children: <Widget>[
-            ListView(shrinkWrap: true, children: const <Widget>[
-              ListTile(title: Text("Sunday")),
-              ListTile(title: Text("Monday")),
-              ListTile(title: Text("Tuesday")),
-              ListTile(title: Text("Wednesday")),
-              ListTile(title: Text("Thursday")),
-              ListTile(title: Text("Friday")),
-              ListTile(title: Text("Saturday")),
-            ]),
-            ListView(shrinkWrap: true, children: const <Widget>[
-              ListTile(title: Text("Sunday")),
-              ListTile(title: Text("Monday")),
-              ListTile(title: Text("Tuesday")),
-              ListTile(title: Text("Wednesday")),
-              ListTile(title: Text("Thursday")),
-              ListTile(title: Text("Friday")),
-              ListTile(title: Text("Saturday")),
-            ]),
-            ListView(shrinkWrap: true, children: const <Widget>[
-              ListTile(title: Text("Sunday")),
-              ListTile(title: Text("Monday")),
-              ListTile(title: Text("Tuesday")),
-              ListTile(title: Text("Wednesday")),
-              ListTile(title: Text("Thursday")),
-              ListTile(title: Text("Friday")),
-              ListTile(title: Text("Saturday")),
-            ]),
-          ],
-        ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.pushNamed(context, '/camera');
+        },
+        child: const Icon(Icons.camera_alt),
       ),
     );
   }
 }
+//Getalldataentries
+
+//future
+// map list of list in pageview (week like) // page view has list view
+// custom widget for each list item
+/// in list of list items
