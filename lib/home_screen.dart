@@ -29,7 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
     List<JournalEntry> jentry =
         await dhandler.getAllEntries(); // gets all entries
     jentry.sort(((a, b) => a.date.compareTo(b.date))); // sort by date
-    List<List<JournalEntry>> weekList = [jentry];
+    List<List<JournalEntry>> weekList = sortWeek(jentry);
     return weekList;
   }
 
@@ -40,18 +40,21 @@ class _HomeScreenState extends State<HomeScreen> {
     List<List<JournalEntry>> returnList = [];
     for (int i = 0; i < jlist.length; i++) {
       DateTime currDate = jlist[i].date;
-      if (currDate.compareTo(end) < 0) {
+      if (currDate.isBefore(end)) {
         week.add(jlist[i]);
       } else {
         List<JournalEntry> addList = [];
         addList.addAll(week);
-        returnList.add(addList);
+        if (addList.isNotEmpty) {
+          returnList.add(addList);
+        }
         week = [];
         week.add(jlist[i]);
         int days = currDate.difference(end).inDays + (7 - currDate.weekday);
-        end.add(Duration(days: days));
+        end = end.add(Duration(days: days));
       }
     }
+    returnList.add(week);
     return returnList;
   }
 
