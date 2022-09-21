@@ -19,6 +19,31 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 }
 
+List<List<JournalEntry>> sortWeek(List<JournalEntry> jlist) {
+  // puts date entries into weeks
+  DateTime end = DateTime.utc(0);
+  List<JournalEntry> week = [];
+  List<List<JournalEntry>> returnList = [];
+  for (int i = 0; i < jlist.length; i++) {
+    DateTime currDate = jlist[i].date;
+    if (currDate.isBefore(end)) {
+      week.add(jlist[i]);
+    } else {
+      List<JournalEntry> addList = [];
+      addList.addAll(week);
+      if (addList.isNotEmpty) {
+        returnList.add(addList);
+      }
+      week = [];
+      week.add(jlist[i]);
+      int days = currDate.difference(end).inDays + (7 - currDate.weekday);
+      end = end.add(Duration(days: days));
+    }
+  }
+  returnList.add(week);
+  return returnList;
+}
+
 class _HomeScreenState extends State<HomeScreen> {
   // list of lists of journal entries
   // sort list
@@ -31,31 +56,6 @@ class _HomeScreenState extends State<HomeScreen> {
     jentry.sort(((a, b) => a.date.compareTo(b.date))); // sort by date
     List<List<JournalEntry>> weekList = sortWeek(jentry);
     return weekList;
-  }
-
-  List<List<JournalEntry>> sortWeek(List<JournalEntry> jlist) {
-    // puts date entries into weeks
-    DateTime end = DateTime.utc(0);
-    List<JournalEntry> week = [];
-    List<List<JournalEntry>> returnList = [];
-    for (int i = 0; i < jlist.length; i++) {
-      DateTime currDate = jlist[i].date;
-      if (currDate.isBefore(end)) {
-        week.add(jlist[i]);
-      } else {
-        List<JournalEntry> addList = [];
-        addList.addAll(week);
-        if (addList.isNotEmpty) {
-          returnList.add(addList);
-        }
-        week = [];
-        week.add(jlist[i]);
-        int days = currDate.difference(end).inDays + (7 - currDate.weekday);
-        end = end.add(Duration(days: days));
-      }
-    }
-    returnList.add(week);
-    return returnList;
   }
 
   void _handleNavigateEntryPage(JournalEntry entry) {
