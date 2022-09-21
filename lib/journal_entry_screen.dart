@@ -129,14 +129,22 @@ class _JournalEntryScreenState extends State<JournalEntryScreen> {
               ),
             ):
             Column(children: [
-              Text(
-                widget.journalEntry!.title, 
-                textAlign: TextAlign.center,
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  widget.journalEntry!.title, 
+                  style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
+                ),
               ),
-              Text(
-                widget.journalEntry!.description,
-                textAlign: TextAlign.justify,
-                maxLines: null,
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  widget.journalEntry!.description,
+                  style: const TextStyle(fontSize: 23),
+                  textAlign: TextAlign.justify,
+                  maxLines: null,
+                ),
               ),
             ],),
             const SizedBox(height: 10)

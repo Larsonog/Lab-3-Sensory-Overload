@@ -5,6 +5,8 @@ import 'package:overexpose_journal/journal_entry.dart';
 //import 'dart:html';
 import 'dart:async';
 
+import 'package:overexpose_journal/journal_entry_screen.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
   //final String title;
@@ -53,6 +55,12 @@ class _HomeScreenState extends State<HomeScreen> {
     return returnList;
   }
 
+  void _handleNavigateEntryPage(JournalEntry entry) {
+    setState(() {
+      Navigator.pushNamed(context, '/entry', arguments: JournalEntryArguments(journalEntry: entry));
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final PageController controller = PageController();
@@ -72,7 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     Expanded(
                       child: ListView(
                         children: list.map((e) {
-                          return HomeEntryItem(item: e);
+                          return HomeEntryItem(item: e, onNavigateEntryScreen: _handleNavigateEntryPage);
                         }).toList(),
                       ),
                     ),
