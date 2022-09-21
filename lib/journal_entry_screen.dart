@@ -144,7 +144,7 @@ class _JournalEntryScreenState extends State<JournalEntryScreen> {
       bottomNavigationBar: BottomAppBar(
         child: Row(
           children: [
-            IconButton(icon: const Icon(Icons.done), onPressed: () {
+            IconButton(icon: const Icon(Icons.done), key: const Key('BY'), onPressed: () {
               if (widget.journal_entry == null) {
                 if (_entryForm.currentState!.validate()) {
                   var entry = JournalEntry(
@@ -165,7 +165,7 @@ class _JournalEntryScreenState extends State<JournalEntryScreen> {
               }
             }),
             const Spacer(),
-            IconButton(icon: const Icon(Icons.close), onPressed: () {Navigator.pushNamed(context, '/camera');}),
+            IconButton(icon: const Icon(Icons.close), key: const Key('BN'), onPressed: () {Navigator.pushNamed(context, '/camera');}),
           ],
         ),
       ),
