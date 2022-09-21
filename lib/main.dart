@@ -59,7 +59,7 @@ class OverExposeJournal extends StatelessWidget {
         return null;
       },
       title: _title,
-      home: const HomeScreen(),
+      home:  TakePictureScreen(camera: firstCamera,),
     );
   }
 }
