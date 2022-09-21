@@ -36,7 +36,7 @@ List<List<JournalEntry>> sortWeek(List<JournalEntry> jlist) {
       }
       week = [];
       week.add(jlist[i]);
-      int days = currDate.difference(end).inDays + (7 - currDate.weekday);
+      int days = currDate.difference(end).inDays + ((currDate.weekday == 7)? 7: (6 - currDate.weekday));
       end = end.add(Duration(days: days));
     }
   }
