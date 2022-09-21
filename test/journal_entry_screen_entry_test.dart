@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -9,7 +8,6 @@ import 'package:overexpose_journal/journal_entry.dart';
 import 'package:overexpose_journal/journal_entry_screen.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
-import 'package:overexpose_journal/data_storage_handler.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
 
@@ -40,7 +38,7 @@ Future main() async {
       
       await tester.pumpWidget(MaterialApp(
         home: Scaffold(
-            body: JournalEntryScreen(journal_entry: jEntry)
+            body: JournalEntryScreen(journalEntry: jEntry)
       )));
 
       final imageFinder = find.byKey(const Key('I'));
@@ -63,7 +61,7 @@ Future main() async {
       
       await tester.pumpWidget(MaterialApp(
         home: Scaffold(
-            body: JournalEntryScreen(journal_entry: jEntry)
+            body: JournalEntryScreen(journalEntry: jEntry)
       )));
 
       final dateFinder = find.text('${DateTime.now().month} / ${DateTime.now().day} / ${DateTime.now().year}');
@@ -86,7 +84,7 @@ Future main() async {
       
       await tester.pumpWidget(MaterialApp(
         home: Scaffold(
-            body: JournalEntryScreen(journal_entry: jEntry)
+            body: JournalEntryScreen(journalEntry: jEntry)
       )));
 
       final textFinder1 = find.text(jEntry.title);

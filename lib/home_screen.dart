@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:overexpose_journal/camera.dart';
 import 'package:overexpose_journal/data_storage_handler.dart';
 import 'package:overexpose_journal/home_screen_entry.dart';
 import 'package:overexpose_journal/journal_entry.dart';
@@ -28,7 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
     List<JournalEntry> jentry =
         await dhandler.getAllEntries(); // gets all entries
     jentry.sort(((a, b) => a.date.compareTo(b.date))); // sort by date
-    List<List<JournalEntry>> weekList = sortWeek(jentry);
+    List<List<JournalEntry>> weekList = [jentry];
     return weekList;
   }
 
@@ -42,7 +41,9 @@ class _HomeScreenState extends State<HomeScreen> {
       if (currDate.compareTo(end) < 0) {
         week.add(jlist[i]);
       } else {
-        returnList.add(week);
+        List<JournalEntry> addList = [];
+        addList.addAll(week);
+        returnList.add(addList);
         week = [];
         week.add(jlist[i]);
         int days = currDate.difference(end).inDays + (7 - currDate.weekday);
@@ -68,10 +69,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 return Column(
                   children: [
                     //header with week value
-                    ListView(
-                      children: list.map((e) {
-                        return HomeEntryItem(item: e);
-                      }).toList(),
+                    Expanded(
+                      child: ListView(
+                        children: list.map((e) {
+                          return HomeEntryItem(item: e);
+                        }).toList(),
+                      ),
                     ),
                   ],
                 );
@@ -83,8 +86,9 @@ class _HomeScreenState extends State<HomeScreen> {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.pushNamed(context, '/camera');
+        onPressed: () async {
+          await Navigator.pushNamed(context, '/camera');
+          setState(() {});
         },
         child: const Icon(Icons.camera_alt),
       ),

@@ -6,9 +6,9 @@ import 'package:overexpose_journal/data_storage_handler.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class JournalEntryScreen extends StatefulWidget {
-  const JournalEntryScreen({super.key, this.journal_entry, this.path});
+  const JournalEntryScreen({super.key, this.journalEntry, this.path});
 
-  final JournalEntry? journal_entry;
+  final JournalEntry? journalEntry;
   final String? path;
 
   @override
@@ -34,10 +34,10 @@ class _JournalEntryScreenState extends State<JournalEntryScreen> {
 
   Future<FileImage> getImage() async {
     FileImage image;
-    if (widget.journal_entry == null) {
+    if (widget.journalEntry == null) {
       image = await dhandler.getImage(widget.path!);
     } else {
-      image = await dhandler.getImage(widget.journal_entry!.path);
+      image = await dhandler.getImage(widget.journalEntry!.path);
     }
 
     return image;
@@ -81,7 +81,7 @@ class _JournalEntryScreenState extends State<JournalEntryScreen> {
               style: const TextStyle(fontSize: 30),
             ),
             const SizedBox(height: 10),
-            (widget.journal_entry == null)?
+            (widget.journalEntry == null)?
             Form(
               key: _entryForm,
               child: 
@@ -130,11 +130,11 @@ class _JournalEntryScreenState extends State<JournalEntryScreen> {
             ):
             Column(children: [
               Text(
-                widget.journal_entry!.title, 
+                widget.journalEntry!.title, 
                 textAlign: TextAlign.center,
               ),
               Text(
-                widget.journal_entry!.description,
+                widget.journalEntry!.description,
                 textAlign: TextAlign.justify,
                 maxLines: null,
               ),
@@ -147,7 +147,7 @@ class _JournalEntryScreenState extends State<JournalEntryScreen> {
         child: Row(
           children: [
             IconButton(icon: const Icon(Icons.done), key: const Key('BY'), onPressed: () {
-              if (widget.journal_entry == null) {
+              if (widget.journalEntry == null) {
                 if (_entryForm.currentState!.validate()) {
                   var entry = JournalEntry(
                     path: widget.path!,
@@ -156,15 +156,16 @@ class _JournalEntryScreenState extends State<JournalEntryScreen> {
                     description: entryControllers[1].text
                   );
                   dhandler.insertEntry(entry);
-                  Navigator.pushNamed(context, '/home');
+                  int count = 0;
+                  Navigator.popUntil(context, (_) => count++ >= 2);
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text('Please finish writing entry...')),
                   );
                 }
               } else {
-                Navigator.pushNamed(context, '/home');
-              }
+                int count = 0;
+                Navigator.popUntil(context, (_) => count++ >= 2);              }
             }),
             const Spacer(),
             IconButton(icon: const Icon(Icons.close), key: const Key('BN'), onPressed: () {Navigator.pushNamed(context, '/camera');}),
@@ -176,8 +177,8 @@ class _JournalEntryScreenState extends State<JournalEntryScreen> {
 }
 
 class JournalEntryArguments {
-  const JournalEntryArguments({this.journal_entry, this.path});
+  const JournalEntryArguments({this.journalEntry, this.path});
 
-  final JournalEntry? journal_entry;
+  final JournalEntry? journalEntry;
   final String? path;
 }

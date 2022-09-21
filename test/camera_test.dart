@@ -37,7 +37,6 @@ void main() {
     await tester.runAsync(() async {
       final cameras = await availableCameras();
       final firstCamera = cameras.first;
-      final mockObserver = MockNavigatorObserver();
       await tester.pumpWidget(TakePictureScreen(camera: firstCamera));
 
       final takePictureButton = find.byType(FloatingActionButton);

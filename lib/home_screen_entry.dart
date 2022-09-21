@@ -1,14 +1,12 @@
 //import 'dart:html';
 
 import 'package:flutter/material.dart';
-import 'package:overexpose_journal/camera.dart';
 import 'package:overexpose_journal/data_storage_handler.dart';
 import 'package:overexpose_journal/journal_entry.dart';
-import 'package:overexpose_journal/home_screen.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class HomeEntryItem extends StatelessWidget {
-  HomeEntryItem({required this.item});
+  HomeEntryItem({super.key, required this.item});
   final JournalEntry item;
   final DataHandler dataHandler = DataHandler.instance;
   final DateTime now = DateTime.now();

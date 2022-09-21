@@ -1,13 +1,9 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
-import 'package:flutter/services.dart';
 import 'package:overexpose_journal/camera.dart';
 import 'package:overexpose_journal/journal_entry_screen.dart';
 import 'package:overexpose_journal/home_screen.dart';
-import 'package:path/path.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:sqflite/sqflite.dart';
 
 
 Future<void> main() async {
@@ -17,6 +13,8 @@ Future<void> main() async {
 
   final firstCamera = cameras.first;
 
+  databaseFactory = databaseFactory;
+
   runApp(OverExposeJournal(firstCamera: firstCamera));
 } //add camera: firstCamera (from camera.dart)
 
@@ -25,7 +23,7 @@ class OverExposeJournal extends StatelessWidget {
   const OverExposeJournal({super.key, required this.firstCamera});
 
   static const String _title = 'Overexpose Journal';
-  final firstCamera;
+  final CameraDescription firstCamera;
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +40,7 @@ class OverExposeJournal extends StatelessWidget {
             builder: (context) {
               return JournalEntryScreen(
                 path: args.path,
-                journal_entry: args.journal_entry,
+                journalEntry: args.journalEntry,
               );
             },
           );
@@ -59,7 +57,7 @@ class OverExposeJournal extends StatelessWidget {
         return null;
       },
       title: _title,
-      home:  TakePictureScreen(camera: firstCamera,),
+      home:  const HomeScreen(),
     );
   }
 }
