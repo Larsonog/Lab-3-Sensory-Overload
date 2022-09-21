@@ -17,23 +17,47 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final PageController controller = PageController();
     return Scaffold(
-        appBar: AppBar(title: const Text("OverExposed Journal")),
-        body: PageView(
-          //return PageView(
-          /// [PageView.scrollDirection] defaults to [Axis.horizontal].
-          /// Use [Axis.vertical] to scroll vertically.
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        title: const Text(
+          'OverExpose Journal',
+          style: TextStyle(color: Colors.black),
+        ),
+      ),
+      body: SizedBox(
+        child: PageView(
           controller: controller,
-          children: const <Widget>[
-            Center(
-              child: Text('This week'),
-            ),
-            Center(
-              child: Text('Next week'),
-            ),
-            Center(
-              child: Text('Last week'),
-            ),
+          children: <Widget>[
+            ListView(shrinkWrap: true, children: const <Widget>[
+              ListTile(title: Text("Sunday")),
+              ListTile(title: Text("Monday")),
+              ListTile(title: Text("Tuesday")),
+              ListTile(title: Text("Wednesday")),
+              ListTile(title: Text("Thursday")),
+              ListTile(title: Text("Friday")),
+              ListTile(title: Text("Saturday")),
+            ]),
+            ListView(shrinkWrap: true, children: const <Widget>[
+              ListTile(title: Text("Sunday")),
+              ListTile(title: Text("Monday")),
+              ListTile(title: Text("Tuesday")),
+              ListTile(title: Text("Wednesday")),
+              ListTile(title: Text("Thursday")),
+              ListTile(title: Text("Friday")),
+              ListTile(title: Text("Saturday")),
+            ]),
+            ListView(shrinkWrap: true, children: const <Widget>[
+              ListTile(title: Text("Sunday")),
+              ListTile(title: Text("Monday")),
+              ListTile(title: Text("Tuesday")),
+              ListTile(title: Text("Wednesday")),
+              ListTile(title: Text("Thursday")),
+              ListTile(title: Text("Friday")),
+              ListTile(title: Text("Saturday")),
+            ]),
           ],
-        ));
+        ),
+      ),
+    );
   }
 }
