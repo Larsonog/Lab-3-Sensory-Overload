@@ -59,13 +59,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
             final image = await _controller.takePicture();
             if (!mounted) return;
 
-            await Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => JournalEntryScreen(
-                  path: image.path,
-                ),
-              )
-            );
+            Navigator.pushNamed(context, '/entry', arguments: JournalEntryArguments(path: image.path));
           } catch (e) {
             print(e);
           }

@@ -56,10 +56,10 @@ class OverExposeJournal extends StatelessWidget {
             },
           );
         }
+        return null;
       },
       title: _title,
-      home: JournalEntryScreen(
-      ),
+      home: const HomeScreen(),
     );
   }
 }
