@@ -1,8 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:transparent_image/transparent_image.dart';
 import 'package:overexpose_journal/journal_entry.dart';
+import 'package:overexpose_journal/data_storage_handler.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class JournalEntryScreen extends StatefulWidget {
   const JournalEntryScreen({super.key, this.journal_entry, this.path});
@@ -16,50 +17,157 @@ class JournalEntryScreen extends StatefulWidget {
 
 class _JournalEntryScreenState extends State<JournalEntryScreen> {
 
+
+  final DateTime now = DateTime.now();
+
+  final DataHandler dhandler = DataHandler.instance;
+
+  final _entryForm = GlobalKey<FormState>();
+
+  final List<TextEditingController> entryControllers = [TextEditingController(), TextEditingController()];
+
+  @override
+  void dispose() {
+    entryControllers.map((e) => e.dispose());
+    super.dispose();
+  }
+
+  Future<FileImage> getImage() async {
+    FileImage image;
+    if (widget.journal_entry == null) {
+      image = await dhandler.getImage(widget.path!);
+    } else {
+      image = await dhandler.getImage(widget.journal_entry!.path);
+    }
+
+    return image;
+  }
+
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       body: SafeArea (
         child: ListView(
           children: [
             ConstrainedBox(
-              constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height - 230),
-              child: Image(
-                image: MemoryImage(kTransparentImage),
-                fit: BoxFit.cover,
-                height: double.infinity,
-                width: double.infinity,
+              constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height - 250),
+              child: FutureBuilder(
+                future: getImage(),
+                builder: (context, AsyncSnapshot<FileImage> snapshot) {
+                  if (snapshot.hasData) {
+                    return Image(
+                      key: const Key('I'),
+                      image: snapshot.data!,
+                      fit: BoxFit.cover,
+                      height: double.infinity,
+                      width: double.infinity,
+                    );
+                  } else {
+                    return Image(
+                      key: const Key('I'),
+                      image: MemoryImage(kTransparentImage),
+                      fit: BoxFit.cover,
+                      height: double.infinity,
+                      width: double.infinity,
+                    );
+                  }
+                }
               ),
             ),
+            const SizedBox(height: 20),
             Text(
-              '${DateTime.now().month} / ${DateTime.now().day} / ${DateTime.now().year}',
+              '${now.month} / ${now.day} / ${now.year}',
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 30),
+              style: const TextStyle(fontSize: 30),
             ),
-
+            const SizedBox(height: 10),
+            (widget.journal_entry == null)?
+            Form(
+              key: _entryForm,
+              child: 
+              Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextFormField(
+                      key: const Key('FT'),
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: 'Enter a title',
+                      ),
+                      controller: entryControllers[0],
+                      style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.center,
+                      validator: (inputValue){
+                        if (inputValue == null || inputValue.isEmpty) {
+                          return 'Please enter a title';
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextFormField(
+                      key: const Key('FD'),
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: 'Enter a description',
+                      ),
+                      controller: entryControllers[1],
+                      maxLines: null,
+                      style: const TextStyle(fontSize: 23),
+                      validator: (inputValue){
+                        if (inputValue == null || inputValue.isEmpty) {
+                          return 'Please enter a description';
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ):
+            Column(children: [
+              Text(
+                widget.journal_entry!.title, 
+                textAlign: TextAlign.center,
+              ),
+              Text(
+                widget.journal_entry!.description,
+                textAlign: TextAlign.justify,
+                maxLines: null,
+              ),
+            ],),
+            const SizedBox(height: 10)
           ],
         ),
       ),
       bottomNavigationBar: BottomAppBar(
         child: Row(
           children: [
-            IconButton(icon: const Icon(Icons.done), onPressed: () {
-              var passOn;
-
+            IconButton(icon: const Icon(Icons.done), key: const Key('BY'), onPressed: () {
               if (widget.journal_entry == null) {
-                var passOn = JournalEntry(
-                  path: widget.path!,
-                  date: DateTime.now(),
-                  title: '[placeholder]',
-                  description: '[placeholder]'
-                );
+                if (_entryForm.currentState!.validate()) {
+                  var entry = JournalEntry(
+                    path: widget.path!,
+                    date: now,
+                    title: entryControllers[0].text,
+                    description: entryControllers[1].text
+                  );
+                  dhandler.insertEntry(entry);
+                  Navigator.pushNamed(context, '/home');
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Please finish writing entry...')),
+                  );
+                }
               } else {
-                var passOn = widget.journal_entry;
+                Navigator.pushNamed(context, '/home');
               }
             }),
             const Spacer(),
-            IconButton(icon: const Icon(Icons.close), onPressed: () {}),
+            IconButton(icon: const Icon(Icons.close), key: const Key('BN'), onPressed: () {Navigator.pushNamed(context, '/camera');}),
           ],
         ),
       ),
