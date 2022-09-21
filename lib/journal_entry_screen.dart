@@ -90,6 +90,7 @@ class _JournalEntryScreenState extends State<JournalEntryScreen> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
+                      key: const Key('FT'),
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         hintText: 'Enter a title',
@@ -108,6 +109,7 @@ class _JournalEntryScreenState extends State<JournalEntryScreen> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
+                      key: const Key('FD'),
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         hintText: 'Enter a description',
