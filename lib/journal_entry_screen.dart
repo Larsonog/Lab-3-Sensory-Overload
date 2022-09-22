@@ -177,7 +177,14 @@ class _JournalEntryScreenState extends State<JournalEntryScreen> {
               }
             }),
             const Spacer(),
-            IconButton(icon: const Icon(Icons.close), key: const Key('BN'), onPressed: () {Navigator.pushNamed(context, '/camera');}),
+            IconButton(icon: const Icon(Icons.close), key: const Key('BN'), onPressed: () {
+              if (widget.journalEntry == null) {
+                int count = 0;
+                Navigator.popUntil(context, (_) => count++ >= 2);
+              } else {
+                Navigator.pop(context);
+              }
+              }),
           ],
         ),
       ),
