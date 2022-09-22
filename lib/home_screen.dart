@@ -74,32 +74,42 @@ class _HomeScreenState extends State<HomeScreen> {
         future: _newFuture(),
         builder: (context, AsyncSnapshot<List<List<JournalEntry>>> snapshot) {
           if (snapshot.hasData) {
-            return PageView(
-              controller: controller,
-              children: snapshot.data!.map((list) {
-                return Column(
-                  children: [
-                    //header with week value
-                    Expanded(
-                      child: ListView.separated(
-                        itemCount: list.length,
-                        itemBuilder: ((context, index) {
-                          return HomeEntryItem(item: list[index], onNavigateEntryScreen: _handleNavigateEntryPage);
-                        }),
-                        separatorBuilder: (context, index) {
-                          return Divider(
-                            indent: 8.0,
-                            endIndent: 8.0,
-                            thickness: 1.0,
-                            color: Theme.of(context).primaryColor,
-                          );
-                        },
+            if ((snapshot.data!.length == 1 && snapshot.data![0].isNotEmpty) || snapshot.data!.length != 1) {
+              return PageView(
+                controller: controller,
+                children: snapshot.data!.map((list) {
+                  return Column(
+                    children: [
+                      //header with week value
+                      Expanded(
+                        child: ListView.separated(
+                          itemCount: list.length,
+                          itemBuilder: ((context, index) {
+                            return HomeEntryItem(item: list[index], onNavigateEntryScreen: _handleNavigateEntryPage);
+                          }),
+                          separatorBuilder: (context, index) {
+                            return Divider(
+                              indent: 8.0,
+                              endIndent: 8.0,
+                              thickness: 1.0,
+                              color: Theme.of(context).primaryColor,
+                            );
+                          },
+                        ),
                       ),
-                    ),
-                  ],
-                );
-              }).toList(),
-            );
+                    ],
+                  );
+                }).toList(),
+              );
+            } else {
+              return const Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Text(
+                  'Press + to add a new journal entry!',
+                  style: const TextStyle(fontSize: 23),
+                  ),
+              );
+            } 
           } else {
             return const Center(child: CircularProgressIndicator());
           }
@@ -110,7 +120,7 @@ class _HomeScreenState extends State<HomeScreen> {
           await Navigator.pushNamed(context, '/camera');
           setState(() {});
         },
-        child: const Icon(Icons.camera_alt),
+        child: const Icon(Icons.add),
       ),
     );
   }
