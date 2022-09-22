@@ -172,7 +172,6 @@ class _JournalEntryScreenState extends State<JournalEntryScreen> {
                   );
                 }
               } else {
-                int count = 0;
                 Navigator.pop(context);
               }
             }),
