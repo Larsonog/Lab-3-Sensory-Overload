@@ -10,20 +10,19 @@ Anyone who owns a phone with a camera can use our app. It is a useful way to kee
 
 Our app allows users to take photos of an activity that they are doing. They are then able to add a description of the activity and add it to the corresponding day. 
 
-![Home Page](/assets/home%20page.png "Home Page")
+<img src="/assets/home%20page.png" width="300">
+
 This is the Home page of our app. The + button at the bottom takes user directly to the camera. 
 
-![Camera](/assets/camera.png "Camera")
+<img src="/assets/camera.png" width="300">
+
 This is the camera screen of the app. After the picture is taken, users can add the title and description for the event. 
 
-![Adding event title](/assets/adding%20title.png "Adding event title")
+<img src="/assets/adding%20title.png" width="250">  <img src="/assets/adding%20description.png" width="250">  <img src="/assets/event%20added.png" width="250">
 
-![Adding event description](/assets/adding%20description.png "Adding description")
-
-![Event Added](/assets/event%20added.png "Event added to home")
 After finishing the entry, it is visible on the home page. 
 
-![Home page with event](/assets/Home%20page%20with%20event.png "Home page with event added")
+<img src="/assets/Home%20page%20with%20event.png" width="300">
 
 ## Testing our app
 
