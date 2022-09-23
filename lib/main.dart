@@ -16,7 +16,7 @@ Future<void> main() async {
   databaseFactory = databaseFactory;
 
   runApp(OverExposeJournal(firstCamera: firstCamera));
-} //add camera: firstCamera (from camera.dart)
+}
 
 
 class OverExposeJournal extends StatelessWidget {
