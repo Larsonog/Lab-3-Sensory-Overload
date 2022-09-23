@@ -5,14 +5,14 @@ import 'package:overexpose_journal/data_storage_handler.dart';
 import 'package:overexpose_journal/journal_entry.dart';
 import 'package:transparent_image/transparent_image.dart';
 
-typedef onNavigateEntryScreenCallback = Function(JournalEntry journalEntry);
+typedef OnNavigateEntryScreenCallback = Function(JournalEntry journalEntry);
 
 class HomeEntryItem extends StatelessWidget {
   HomeEntryItem({super.key, required this.item, required this.onNavigateEntryScreen});
   final JournalEntry item;
   final DataHandler dataHandler = DataHandler.instance;
   final DateTime now = DateTime.now();
-  final onNavigateEntryScreenCallback onNavigateEntryScreen;
+  final OnNavigateEntryScreenCallback onNavigateEntryScreen;
 
   @override
   Widget build(BuildContext context) {
