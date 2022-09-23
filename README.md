@@ -1,6 +1,6 @@
 # Over Expose Journal
 
-A Flutter Demo project.
+A Flutter Photo Journal.
 
 ## Photo Journal
 
@@ -24,3 +24,7 @@ This is the camera screen of the app. After the picture is taken, users can add 
 After finishing the entry, it is visible on the home page. 
 
 ![Home page with event](/assets/Home%20page%20with%20event.png "Home page with event added")
+
+## Testing our app
+
+Due to the use of the camera plugin, the emulated phone cannot be a Google Pixel.
