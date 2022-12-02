@@ -5,11 +5,13 @@ import 'package:overexpose_journal/journal_entry_screen.dart';
 import 'package:overexpose_journal/home_screen.dart';
 import 'package:sqflite/sqflite.dart';
 
+List<CameraDescription> availcameras = [];
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   final cameras = await availableCameras();
+  availcameras = await availableCameras();
 
   final firstCamera = cameras.first;
 
@@ -17,7 +19,6 @@ Future<void> main() async {
 
   runApp(OverExposeJournal(firstCamera: firstCamera));
 }
-
 
 class OverExposeJournal extends StatelessWidget {
   const OverExposeJournal({super.key, required this.firstCamera});
@@ -29,8 +30,7 @@ class OverExposeJournal extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       routes: {
-        '/home': (context) =>
-            const HomeScreen(),
+        '/home': (context) => const HomeScreen(),
       },
       onGenerateRoute: (settings) {
         if (settings.name == '/entry') {
@@ -45,19 +45,18 @@ class OverExposeJournal extends StatelessWidget {
             },
           );
         } else if (settings.name == '/camera') {
-
           return MaterialPageRoute(
             builder: (context) {
               return TakePictureScreen(
-                camera: firstCamera,
-              );
+                  //camera: firstCamera,
+                  );
             },
           );
         }
         return null;
       },
       title: _title,
-      home:  const HomeScreen(),
+      home: const HomeScreen(),
     );
   }
 }
