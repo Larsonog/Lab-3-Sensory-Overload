@@ -75,8 +75,11 @@ class TakePictureScreenState extends State<TakePictureScreen> {
       appBar: AppBar(title: const Text('Take a picture of your activity')),
       body: _initializeControllFuture
           ? AspectRatio(
-              aspectRatio: 2 / _controller!.value.aspectRatio,
+              aspectRatio: 2 /
+                  _controller!.value
+                      .aspectRatio, // issue with aspect ratio is somewhere here
               child: ClipRect(
+                //camera preview and actual picture taken not the same
                 child: Transform.scale(
                   alignment: Alignment.center,
                   scale: _controller!.value.aspectRatio / 0.7,
